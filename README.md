@@ -42,18 +42,21 @@ chain = prompt | model <br>
 result = chain.invoke({"key":"value"})
 
 Extended <br>
-O -> O -> O -> O
+O --> O --> O --> O
 
 Parallel <br>
-   -> O -> O -> <br>
-O -          O <br>
-   -> O -> O -> <br>
+          O --> O
+        /
+O --> O
+        \
+          O --> O
 
 Branching <br>
-   ->  O -> O <br>
-O -->  O -> O <br>
-   ->  O -> O <br>
-
+           --> O --> O
+         /
+O --> O ----- O --> O
+         \
+           --> O --> O
 
 Example of a basic chain <br>
 chain = prompt_template | model | StrOutputParser()<br>

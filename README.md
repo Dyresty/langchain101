@@ -13,7 +13,9 @@ Langchain is a Python framework for building LLM-powered applications with compo
 Langchains way of connecting us to LLMs like ChatGPT, Claude, Gemini. <br>
 Store the API_key in the env file <br>
 The model creation with <br>
-  model = ChatOpenAI(model="gpt-4o") <br>
+```
+  model = ChatOpenAI(model="gpt-4o")
+```
 This automatically takes the API_KEY from the env file internally. (Defined in the code) <br>
 model.invoke() -> Invoke function is the way of langchain to use these models. <br>
 
@@ -38,31 +40,40 @@ Can chain the output of one prompt to be an input of the next prompt and so on t
 
 prompt -> model -> Result <br>
 The above chain can be represented using LCEL, Langchain Expression Language, as below. <br>
-chain = prompt | model <br>
+```
+chain = prompt | model
 result = chain.invoke({"key":"value"})
+```
 
 Extended <br>
+```
 O --> O --> O --> O
+```
 
 Parallel <br>
+```
           O --> O
         /
 O --> O
         \
           O --> O
+```
 
 Branching <br>
-           --> O --> O
-         /
+```
+         --> O --> O
+        /
 O --> O ----- O --> O
-         \
-           --> O --> O
+        \
+         --> O --> O
+```
 
 Example of a basic chain <br>
-chain = prompt_template | model | StrOutputParser()<br>
-
-result = chain.invoke({"topic": "xyz", "count": 3})<br>
+```
+chain = prompt_template | model | StrOutputParser()
+result = chain.invoke({"topic": "xyz", "count": 3})
 print(result)
+```
 
 ### Runnables 
 Runnable is a task.<br>
@@ -73,10 +84,16 @@ The runnable sequence takes arguments in the format of first, middle and last. W
 LangChain expects each step in a chain to have a .invoke(input) method and potentially other features (like batch, stream, etc.). A normal function or lambda doesn’t have these. <br>
 RunnableLambda is a LangChain utility that wraps any normal Python function or lambda and gives it the .invoke() method (and other chain-compatible behaviors). <br>
 
-uppercase_output = RunnableLambda(lambda x: x.upper()) <br>
-count_words = RunnableLambda(lambda x: f"Word count: {len(x.split())}\n{x}") <br>
+```
+uppercase_output = RunnableLambda(lambda x: x.upper())
+count_words = RunnableLambda(lambda x: f"Word count: {len(x.split())}\n{x}")
 chain = prompt_template | model | StrOutputParser() | uppercase_output | count_words
+```
 
-This ensures they have .invoke() and can be used with | operators in LCEL.
+This ensures they have .invoke() and can be used with | operators in LCEL. <br>
 It makes your custom logic composable within LangChain pipelines.
+
+### RAG 
+Retrieval Augmented Generation <br>
+Giving additional sources of information to LLMs. Websites, PDFs, Code, Video Transcripts. <br>
 

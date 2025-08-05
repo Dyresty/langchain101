@@ -97,3 +97,21 @@ It makes your custom logic composable within LangChain pipelines.
 Retrieval Augmented Generation <br>
 Giving additional sources of information to LLMs. Websites, PDFs, Code, Video Transcripts. <br>
 
+#### RAG Overview
+PDF is the initial source of info. Consider about 10M tokens.<br>
+Break those into chunks. With each chunk having 1k tokens. Chunks are just plain tokens.<br>
+LLM Embedder converts test to Embedding.<br>
+Embedding is the numerical representation of text. The embeddings of the text will have some relationship with each other numerically. Allows for easily searching items of similarity.<br>
+All the Embeddings and the Text are saved to a Vector Store.<br>
+
+#### RAG Q&A Flow
+So when a question is asked, it is also embedded.<br>
+The retriever will check the embedding of the question and the vector store and selects certain chunks of relevant data. All these selected chunks are passed to the model along with the question. With that the model will have a relevant small amount of chunks to answer the question.<br>
+
+Text Splitting can be done in such a way that there is some overlap characters between each chunk to maintain continuity for better performance.<br>
+
+Text Embedding is done for example using OpenAIEmbeddings. Small would use a smaller representation. Large would use a more accurate, costly representation.
+
+Retriever<br>
+Similarity score threshold - to filter out. k = 3 -> gives the top 3 relevant documents
+If too strict, results might not come. 
